@@ -1,0 +1,11 @@
+# Additional dependencies required ONLY by future-implementation-scope/.
+# Not required to run the current Streamlit app (python-app/).
+# Install these on top of python-app/requirements.txt when wiring up the
+# Postgres + pgvector + S3 persistence layer described in
+# future-implementation-scope/README.md.
+
+sqlalchemy>=2.0
+psycopg2-binary
+pgvector
+boto3
+alembic
