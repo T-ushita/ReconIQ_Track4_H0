@@ -11,6 +11,7 @@ import ipaddress
 import re
 from urllib.parse import urlparse
 from datetime import datetime
+from storage.s3_store import upload_report   
 
 from agents.crawler_agent import crawl_url
 from agents.form_fuzzer_agent import fuzz_forms
@@ -453,7 +454,19 @@ def run_pipeline(
             report_md, report_router = generate_report(url, recon_data, triage_data, context=ctx)
             result["report"] = report_md
             result["confidence_scores"]["report"] = report_router.confidence
-            session.report_md = report_md
+
+            # Upload report markdown to S3; store the S3 key on the session row.
+            try:
+                s3_key = upload_report(session.session_id, report_md)
+                session.report_md = s3_key
+                emit("report", f"Report uploaded to S3: {s3_key}")
+            except Exception as s3_err:
+                # S3 upload failure is non-fatal — store raw md as fallback
+                # so the scan result is not lost. Log and continue.
+                import logging
+                logging.getLogger(__name__).error(f"S3 upload failed: {s3_err}")
+                session.report_md = report_md   # fallback: store inline
+            
             session.confidence_scores = _serialize_agent_result(ctx.confidence_scores)
             session.injection_attempts = _serialize_agent_result(ctx.injection_detections)
             session.cross_references = ctx.get_cross_reference_hints()
