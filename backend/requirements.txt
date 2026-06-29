@@ -1,4 +1,4 @@
-fastapi
+fastapi[standard]
 uvicorn[standard]
 streamlit>=1.32.0
 tinyfish>=0.1.0
