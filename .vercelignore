@@ -1,0 +1,6 @@
+backend/
+python-app/
+infra/
+*.py
+requirements.txt
+Procfile
