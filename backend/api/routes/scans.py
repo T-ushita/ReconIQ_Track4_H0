@@ -78,7 +78,8 @@ async def get_scan_status(session_id: str):
     return {
         "session_id": session.session_id,
         "status": session.status,
-        "started_at": session.started_at
+        "started_at": session.started_at,
+        "error_message": session.error_messages
     }
 
 
@@ -115,5 +116,5 @@ async def get_agent_info(session_id: str):
     return {
         "confidence_scores": session.confidence_scores,
         "cross_references": session.cross_references,
-        "injection_attempts": session.injection_attempts
+        "injection_attempts":s session.injection_attempts
     }

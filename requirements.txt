@@ -17,3 +17,4 @@ psycopg2-binary
 pgvector               
 boto3                  
 botocore               
+transformers<5

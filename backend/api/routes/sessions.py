@@ -22,3 +22,13 @@ async def sessions():
         )
 
     return data
+
+@router.get("/history")
+async def history():
+    """Dashboard-ready summaries for completed scans."""
+    return get_history_summaries()
+
+@router.delete("")
+async def delete_all_sessions():
+    clear_all_sessions()
+    return {"deleted": True}
