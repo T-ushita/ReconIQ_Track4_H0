@@ -1,5 +1,6 @@
-from fastapi import APIRouter
-from scan_session import get_session
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import RedirectResponse, PlainTextResponse
+from services.scan_session import get_session
 from storage.s3_store import upload_report, get_report_text
 
 router = APIRouter(
@@ -18,11 +19,10 @@ async def get_report(session_id: str):
  
     try:
         text_content = get_report_t fext(session_id)
-        from fastapi.responses import PlainTextResponse
-        return PlainTextResponse(content=text_content, media_type="text/markdown")
+        return {"session_id": session_id, "report_s3_key": s.report_md,
+            "download_url": f"/api/v1/reports/{session_id}/download"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch report: {e}")
-
 
 
 @router.get("{session_id}/download")
@@ -49,3 +49,15 @@ async def download_report(session_id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to generate download URL: {e}")
  
+@router.get("/{session_id}/raw", response_class=PlainTextResponse)
+async def get_report_raw(session_id: str):
+    """Returns raw markdown fetched from S3. Server-side use (PDF export etc.)."""
+    session = get_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+    if not session.report_md or not session.report_md.startswith("reports/"):
+        raise HTTPException(status_code=404, detail="Report not in S3.")
+    try:
+        return PlainTextResponse(content=get_report_text(session_id), media_type="text/markdown")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

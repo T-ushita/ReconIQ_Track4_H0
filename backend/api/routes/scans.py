@@ -21,7 +21,7 @@ from fastapi import APIRouter, BackgroundTasks
 from pydantic import BaseModel
 
 from pipeline import run_pipeline
-from scan_session import get_session, create_session
+from services.scan_session import get_session, create_session
 
 router = APIRouter(prefix="/api/v1/scans", tags=["Scans"])
 
