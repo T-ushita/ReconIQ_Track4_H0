@@ -7,9 +7,12 @@ python-dotenv>=1.0.0
 requests>=2.31.0
 pandas>=2.0.0
 plotly>=5.18.0
+torch == 2.2.2
+transformers<5
 sentence-transformers>=2.7.0
-torch
 pydantic
 beautifulsoup4
 lxml
 httpx
+boto3
+numpy<2

@@ -131,7 +131,7 @@ def create_session(target_url: str, fuzzing_authorized: bool = False) -> ScanSes
     return session
 
 def save_session(session: ScanSession):
-    """Insert or update a session in Aurora PostgreSQL."""s
+    """Insert or update a session in Aurora PostgreSQL."""
     
     row = session.to_db_row()
     # Build the SET clause for the upsert update branch

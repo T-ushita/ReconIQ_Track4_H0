@@ -7,7 +7,7 @@ Includes effort estimates and GitHub issue generation links.
 import os
 import json
 from datetime import datetime
-from model_router import route_llm_call, TaskType, RouterResult
+from services.model_router import route_llm_call, TaskType, RouterResult
 
 load_dotenv = lambda: None  # no-op, dotenv already loaded
 

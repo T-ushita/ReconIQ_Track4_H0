@@ -7,9 +7,9 @@ Acts as a second independent reviewer.
 
 import json
 
-from model_router import route_llm_call, RouterResult, TaskType
-from prompt_guard import sanitize_dict
-from output_validator import safe_json_parse
+from services.model_router import route_llm_call, RouterResult, TaskType
+from services.prompt_guard import sanitize_dict
+from services.output_validator import safe_json_parse
 
 SYSTEM_PROMPT = """
 You are a senior application security reviewer.

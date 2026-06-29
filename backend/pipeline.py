@@ -21,9 +21,9 @@ from agents.vuln_detection_agent import detect_vulnerabilities
 from agents.triage_agent import triage_vulnerabilities
 from agents.report_agent import generate_report
 from agents.verifier_agent import verify_vulnerabilities
-from confidence import calculate_consensus_confidence
-from scan_context import ScanContext
-from scan_session import (
+from services.confidence import calculate_consensus_confidence
+from services.scan_context import ScanContext
+from services.scan_session import (
     ScanSession, SessionStatus, create_session, save_session,
     update_session_status, get_session,
 )

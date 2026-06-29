@@ -7,9 +7,9 @@ import os
 import json
 from groq import Groq
 from dotenv import load_dotenv
-from model_router import route_llm_call, TaskType, RouterResult
-from prompt_guard import sanitize_dict
-from output_validator import validate_triage, safe_json_parse
+from services.model_router import route_llm_call, TaskType, RouterResult
+from services.prompt_guard import sanitize_dict
+from services.output_validator import validate_triage, safe_json_parse
 
 load_dotenv()
 
