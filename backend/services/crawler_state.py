@@ -7,7 +7,7 @@ Now backed by scan_session for isolated scan tracking.
 import json
 import os
 from datetime import datetime
-from scan_session import ScanSession, SessionStatus, create_session, save_session, list_sessions
+from services.scan_session import ScanSession, SessionStatus, create_session, save_session, list_sessions
 
 STATE_FILE = "crawler_state.json"
 

@@ -13,7 +13,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
 from pipeline import run_pipeline
-from scan_session import ScanSession, SessionStatus, create_session, save_session
+from services.scan_session import ScanSession, SessionStatus, create_session, save_session
 
 engine = create_engine(
     os.environ["DATABASE_URL"],
@@ -94,7 +94,7 @@ def save_monitored(sites: list):
             sql = text(
                 """
                 INSERT INTO monitored_sites (url, schedule, webhook_url, active, added_at, last_scan, next_scan, scan_history)
-                VALUES (:url, :schedule, :webhook_url, :active, :added_at, :last_scan, :next_scan, :scan_history)
+                VALUES (:url, :schedule, :webhook_url, :active, :added_at, :last_scan, :next_scan,  :scan_history::jsonb)
                 ON CONFLICT (url) DO UPDATE SET
                     schedule = EXCLUDED.schedule,
                     webhook_url = EXCLUDED.webhook_url,
@@ -142,12 +142,12 @@ def add_site(url: str, schedule: str = "7d", webhook_url: str = "") -> dict:
         })
         db_session.commit()
  
-        row = db.execute(
+        row = db_session.execute(
             text("SELECT * FROM monitored_sites WHERE url = :url"),
             {"url": url}
         ).mappings().fetchone()
  
-    return _row_to_dict(row)
+    return row_to_dict(row)
 
 
 def remove_site(url: str):
