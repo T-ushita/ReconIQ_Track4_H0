@@ -26,7 +26,6 @@ class TaskType(Enum):
     DETECTION      = "detection"
     SYNTHESIS      = "synthesis"
 
-
 # FIX 2: all model IDs updated to Bedrock; stale `provider` key removed
 ROUTING = {
     TaskType.CLASSIFICATION: {
