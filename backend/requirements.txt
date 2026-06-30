@@ -16,3 +16,4 @@ lxml
 httpx
 boto3
 numpy<2
+sqlalchemy>=2.0

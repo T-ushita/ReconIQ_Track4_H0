@@ -11,7 +11,7 @@ from datetime import datetime
 from dataclasses import dataclass, field, asdict
 from enum import Enum
 
-from sqlachemy import (
+from sqlalchemy import (
     create_engine, text, table, column, String, Integer, Float,
      DateTime, Text, Boolean, MetaData
 )
@@ -29,7 +29,7 @@ engine =  create_engine(
     max_overflow=10,
 )
 
-session = sessionmaker(bind=engine)
+session = sessionmaker(bind=engine, expire_on_commit=False) 
 
 # ── SQLAlchemy metadata + table definition ────────────────────────────────────
 metadata = MetaData()
@@ -173,7 +173,7 @@ def list_sessions(
             ORDER BY created_at DESC
             LIMIT :limit OFFSET :offset
         """)
-    params = {"status": status.value, "limit": limit, "offset": offset}
+        params = {"status": status.value, "limit": limit, "offset": offset}
     else:
         sql = text("""
         SELECT * FROM scan_sessions

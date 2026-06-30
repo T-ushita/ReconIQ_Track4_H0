@@ -116,5 +116,5 @@ async def get_agent_info(session_id: str):
     return {
         "confidence_scores": session.confidence_scores,
         "cross_references": session.cross_references,
-        "injection_attempts":s session.injection_attempts
+        "injection_attempts": session.injection_attempts
     }
